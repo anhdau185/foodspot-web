@@ -1,11 +1,30 @@
+import { useState, useCallback } from "react";
+import { Restaurant } from "@/types/restaurant";
+import { City } from "@/types/city";
+import { searchYelpRestaurants } from "@/lib/api/yelp";
 import { mockRestaurants } from "@/data/mockRestaurants";
 import { convertPriceToNumber } from "@/lib/utils/formatting";
-import { City } from "@/types/city";
-import { Restaurant } from "@/types/restaurant";
-import { useCallback, useState } from "react";
 
 export const useRestaurantSearch = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleError = useCallback((errorMessage: string) => {
+    if (errorMessage.includes("API key")) {
+      setError("API configuration issue. Please check your Yelp API key.");
+    } else if (
+      errorMessage.includes("Failed to fetch") ||
+      errorMessage.includes("NetworkError")
+    ) {
+      setError(
+        "Network error. Please check your internet connection and try again."
+      );
+    } else if (errorMessage.includes("500")) {
+      setError("Server error. Please try again later.");
+    } else {
+      setError("Unable to fetch restaurant data. Please try again.");
+    }
+  }, []);
 
   const searchRestaurants = useCallback(
     async (
@@ -15,44 +34,49 @@ export const useRestaurantSearch = () => {
       priceRange: number
     ): Promise<Restaurant[]> => {
       setIsLoading(true);
+      setError(null);
 
-      // In production, this would call Yelp Fusion API
-      // const yelpResponse = await searchYelpRestaurants(city, cuisine, dietary);
+      try {
+        console.log("Searching restaurants with Yelp API...", {
+          city: city.name,
+          cuisine,
+          dietary,
+          priceRange,
+        });
+        const restaurants = await searchYelpRestaurants(
+          city,
+          cuisine,
+          dietary,
+          priceRange
+        );
 
-      // Simulate API call delay
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          let filtered = mockRestaurants;
-
-          // Filter by cuisine
-          if (cuisine !== "All Cuisines") {
-            filtered = filtered.filter((r) =>
-              r.categories.some((cat) =>
-                cat.title.toLowerCase().includes(cuisine.toLowerCase())
-              )
-            );
-          }
-
-          // Filter by dietary restrictions (would be done via Yelp attributes in real API)
-          if (dietary !== "None") {
-            // This would be handled by Yelp's attributes parameter in production
-            // For now, we'll show all results
-          }
-
-          filtered = filtered.filter(
-            (r) => convertPriceToNumber(r.price) <= priceRange
+        if (restaurants.length > 0) {
+          console.log(`✅ Yelp API returned ${restaurants.length} restaurants`);
+          return restaurants;
+        } else {
+          console.log("⚠️ Yelp API returned no results");
+          setError(
+            "No restaurants found matching your criteria. Try adjusting your filters."
           );
+          return [];
+        }
+      } catch (apiError) {
+        console.error("❌ Yelp API failed:", apiError);
 
-          // Sort by rating
-          filtered = filtered.sort((a, b) => b.rating - a.rating);
+        const errorMessage =
+          apiError instanceof Error
+            ? apiError.message
+            : "Unknown error occurred";
 
-          setIsLoading(false);
-          resolve(filtered);
-        }, 1000);
-      });
+        handleError(errorMessage);
+
+        return [];
+      } finally {
+        setIsLoading(false);
+      }
     },
-    []
+    [handleError]
   );
 
-  return { searchRestaurants, isLoading };
+  return { searchRestaurants, isLoading, error };
 };

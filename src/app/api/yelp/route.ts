@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Build query parameters
     const params = new URLSearchParams({
       latitude: latitude.toString(),
       longitude: longitude.toString(),
@@ -52,6 +51,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
+    console.log(response.ok, data);
     return NextResponse.json(data);
   } catch (error) {
     console.error("Yelp API error:", error);

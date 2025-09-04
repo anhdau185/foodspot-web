@@ -3,7 +3,7 @@
 import { useRestaurantSearch } from "@/hooks/useRestaurantSearch";
 import { useAppStore } from "@/lib/stores/useAppStore";
 import { getFavorites, toggleFavorite } from "@/lib/utils/storage";
-import { Filter, Utensils } from "lucide-react";
+import { AlertCircle, Filter, Utensils } from "lucide-react";
 import { useEffect } from "react";
 
 // Components
@@ -36,7 +36,7 @@ export default function HomePage() {
     resetPreferences,
   } = useAppStore();
 
-  const { searchRestaurants, isLoading } = useRestaurantSearch();
+  const { searchRestaurants, isLoading, error } = useRestaurantSearch();
 
   // Load favorites from localStorage on mount
   useEffect(() => {
@@ -122,13 +122,21 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={resetPreferences}
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
+            className="flex items-center space-x-2 text-gray-600 hover:text-gray-800 cursor-pointer"
           >
             <Filter className="w-4 h-4" />
             <span>Change Filters</span>
           </button>
           <h2 className="text-xl font-bold text-gray-800">Recommendations</h2>
         </div>
+
+        {/* API Status Warning */}
+        {error && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 flex items-start space-x-3">
+            <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+            <p className="text-yellow-700 text-xs mt-1">{error}</p>
+          </div>
+        )}
 
         {/* Results */}
         <RestaurantList
