@@ -1,14 +1,186 @@
-import { City } from "@/types/city";
-
-export const vietnamCities: City[] = [
-  { name: "Ho Chi Minh City", lat: 10.8231, lng: 106.6297 },
-  { name: "Hanoi", lat: 21.0285, lng: 105.8542 },
-  { name: "Da Nang", lat: 16.0471, lng: 108.2068 },
-  { name: "Hoi An", lat: 15.8801, lng: 108.338 },
-  { name: "Nha Trang", lat: 12.2388, lng: 109.1967 },
-  { name: "Hue", lat: 16.4637, lng: 107.5909 },
-  { name: "Can Tho", lat: 10.0452, lng: 105.7469 },
-  { name: "Vung Tau", lat: 10.4113, lng: 107.1361 },
-  { name: "Dalat", lat: 11.9404, lng: 108.4583 },
-  { name: "Phu Quoc", lat: 10.2899, lng: 103.984 },
+export const US_CITIES = [
+  {
+    id: 1,
+    name: "New York City",
+    state: "New York",
+    country: "United States",
+    coordinates: { lat: 40.7128, lng: -74.006 },
+    population: 8336817,
+    foodScene: {
+      description:
+        "The ultimate melting pot with authentic cuisine from every corner of the world",
+      highlights: ["Chinatown", "Little Italy", "Koreatown", "Jackson Heights"],
+      specialties: ["Pizza", "Bagels", "Deli", "Street Food"],
+      diversityScore: 10,
+    },
+    yelpBusinessCount: 45000,
+  },
+  {
+    id: 2,
+    name: "San Francisco",
+    state: "California",
+    country: "United States",
+    coordinates: { lat: 37.7749, lng: -122.4194 },
+    population: 873965,
+    foodScene: {
+      description: "Tech hub with innovative dining and strong Asian influence",
+      highlights: ["Chinatown", "Mission District", "North Beach", "Castro"],
+      specialties: ["Sourdough", "Mission Burrito", "Dim Sum", "Farm-to-table"],
+      diversityScore: 9,
+    },
+    yelpBusinessCount: 12500,
+  },
+  {
+    id: 3,
+    name: "Los Angeles",
+    state: "California",
+    country: "United States",
+    coordinates: { lat: 34.0522, lng: -118.2437 },
+    population: 3898747,
+    foodScene: {
+      description:
+        "Sprawling metropolis with incredible Latino and Asian food scenes",
+      highlights: ["Koreatown", "Little Tokyo", "East LA", "West Hollywood"],
+      specialties: ["Tacos", "Korean BBQ", "Food Trucks", "In-N-Out"],
+      diversityScore: 9,
+    },
+    yelpBusinessCount: 35000,
+  },
+  {
+    id: 4,
+    name: "Chicago",
+    state: "Illinois",
+    country: "United States",
+    coordinates: { lat: 41.8781, lng: -87.6298 },
+    population: 2693976,
+    foodScene: {
+      description:
+        "Midwest hub with deep-dish pizza and diverse ethnic neighborhoods",
+      highlights: ["Pilsen", "Chinatown", "Little Village", "Devon Avenue"],
+      specialties: [
+        "Deep-dish Pizza",
+        "Italian Beef",
+        "Hot Dogs",
+        "Polish Food",
+      ],
+      diversityScore: 8,
+    },
+    yelpBusinessCount: 18000,
+  },
+  {
+    id: 5,
+    name: "Toronto",
+    state: "Ontario",
+    country: "Canada",
+    coordinates: { lat: 43.6532, lng: -79.3832 },
+    population: 2731571,
+    foodScene: {
+      description:
+        "Canada's most diverse city with incredible multicultural dining",
+      highlights: [
+        "Kensington Market",
+        "Little Italy",
+        "Greektown",
+        "Chinatown",
+      ],
+      specialties: ["Peameal Bacon", "Butter Tarts", "Shawarma", "Dim Sum"],
+      diversityScore: 9,
+    },
+    yelpBusinessCount: 15000,
+  },
+  {
+    id: 6,
+    name: "Miami",
+    state: "Florida",
+    country: "United States",
+    coordinates: { lat: 25.7617, lng: -80.1918 },
+    population: 442241,
+    foodScene: {
+      description:
+        "Gateway to Latin America with vibrant Caribbean and South American cuisine",
+      highlights: ["Little Havana", "South Beach", "Wynwood", "Brickell"],
+      specialties: ["Cuban Sandwich", "Ceviche", "Empanadas", "Stone Crab"],
+      diversityScore: 8,
+    },
+    yelpBusinessCount: 8500,
+  },
+  {
+    id: 7,
+    name: "Seattle",
+    state: "Washington",
+    country: "United States",
+    coordinates: { lat: 47.6062, lng: -122.3321 },
+    population: 737015,
+    foodScene: {
+      description:
+        "Pacific Northwest cuisine with strong Asian influence and coffee culture",
+      highlights: [
+        "International District",
+        "Pike Place Market",
+        "Capitol Hill",
+        "Fremont",
+      ],
+      specialties: ["Coffee", "Salmon", "Asian Fusion", "Craft Beer"],
+      diversityScore: 8,
+    },
+    yelpBusinessCount: 9500,
+  },
+  {
+    id: 8,
+    name: "Houston",
+    state: "Texas",
+    country: "United States",
+    coordinates: { lat: 29.7604, lng: -95.3698 },
+    population: 2320268,
+    foodScene: {
+      description:
+        "Diverse energy capital with exceptional Vietnamese, Mexican, and BBQ scenes",
+      highlights: ["Chinatown", "East End", "Montrose", "Heights"],
+      specialties: ["BBQ", "Tex-Mex", "Vietnamese Pho", "Crawfish"],
+      diversityScore: 8,
+    },
+    yelpBusinessCount: 22000,
+  },
+  {
+    id: 9,
+    name: "Washington DC",
+    state: "District of Columbia",
+    country: "United States",
+    coordinates: { lat: 38.9072, lng: -77.0369 },
+    population: 705749,
+    foodScene: {
+      description:
+        "Political hub with diverse international dining and emerging food scene",
+      highlights: [
+        "Adams Morgan",
+        "Dupont Circle",
+        "H Street Corridor",
+        "Georgetown",
+      ],
+      specialties: [
+        "Ethiopian Food",
+        "Half-smoke",
+        "Mumbo Sauce",
+        "Food Halls",
+      ],
+      diversityScore: 8,
+    },
+    yelpBusinessCount: 7500,
+  },
+  {
+    id: 10,
+    name: "Vancouver",
+    state: "British Columbia",
+    country: "Canada",
+    coordinates: { lat: 49.2827, lng: -123.1207 },
+    population: 631486,
+    foodScene: {
+      description:
+        "Pacific gateway with outstanding Asian cuisine and fresh seafood",
+      highlights: ["Richmond", "Chinatown", "Commercial Drive", "West End"],
+      specialties: ["Dim Sum", "Sushi", "Salmon", "Asian Fusion"],
+      diversityScore: 9,
+    },
+    yelpBusinessCount: 8000,
+  },
 ];

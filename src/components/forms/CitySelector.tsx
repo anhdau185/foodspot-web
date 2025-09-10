@@ -1,17 +1,16 @@
-import { vietnamCities } from "@/data/cities";
-import { City } from "@/types/city";
+import { useAppStore } from "@/lib/stores/useAppStore";
 import { MapPin } from "lucide-react";
-import React from "react";
+import { useEffect } from "react";
 
-interface CitySelectorProps {
-  selectedCity: City;
-  onCityChange: (city: City) => void;
-}
+export const CitySelector = () => {
+  const { cities, selectedCity, setSelectedCity } = useAppStore();
 
-export const CitySelector: React.FC<CitySelectorProps> = ({
-  selectedCity,
-  onCityChange,
-}) => {
+  useEffect(() => {
+    if (cities.length > 0 && selectedCity == null) {
+      setSelectedCity(cities[0]);
+    }
+  }, [cities]);
+
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -19,15 +18,15 @@ export const CitySelector: React.FC<CitySelectorProps> = ({
       </label>
       <div className="relative">
         <select
-          value={selectedCity.name}
+          value={selectedCity?.name}
           onChange={(e) => {
-            const city = vietnamCities.find((c) => c.name === e.target.value);
-            if (city) onCityChange(city);
+            const city = cities.find((c) => c.name === e.target.value);
+            if (city) setSelectedCity(city);
           }}
           className="w-full p-3 border border-gray-200 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent appearance-none"
         >
-          {vietnamCities.map((city) => (
-            <option key={city.name} value={city.name}>
+          {cities.map((city) => (
+            <option key={city.id} value={city.name}>
               {city.name}
             </option>
           ))}

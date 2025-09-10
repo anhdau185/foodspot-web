@@ -1,9 +1,7 @@
-import { useState, useCallback } from "react";
-import { Restaurant } from "@/types/restaurant";
-import { City } from "@/types/city";
 import { searchYelpRestaurants } from "@/lib/api/yelp";
-import { mockRestaurants } from "@/data/mockRestaurants";
-import { convertPriceToNumber } from "@/lib/utils/formatting";
+import { City } from "@/types/city";
+import { Restaurant } from "@/types/restaurant";
+import { useCallback, useState } from "react";
 
 export const useRestaurantSearch = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,12 +35,6 @@ export const useRestaurantSearch = () => {
       setError(null);
 
       try {
-        console.log("Searching restaurants with Yelp API...", {
-          city: city.name,
-          cuisine,
-          dietary,
-          priceRange,
-        });
         const restaurants = await searchYelpRestaurants(
           city,
           cuisine,

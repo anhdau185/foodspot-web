@@ -3,6 +3,4 @@ export const dietaryRestrictions = [
   "Vegetarian",
   "Vegan",
   "Gluten-Free",
-  "Dairy-Free",
-  "Nut-Free",
 ];

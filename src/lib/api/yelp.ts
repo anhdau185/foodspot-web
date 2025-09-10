@@ -1,5 +1,6 @@
 import { City } from "@/types/city";
 import { Restaurant } from "@/types/restaurant";
+import { compact } from "lodash-es";
 
 interface YelpSearchParams {
   latitude: number;
@@ -11,6 +12,45 @@ interface YelpSearchParams {
   attributes?: string;
 }
 
+// Map cuisine names to Yelp categories
+const getCuisineCategory = (cuisine: string): string => {
+  const cuisineMap: Record<string, string> = {
+    "All Cuisines": "restaurants",
+    Italian: "italian",
+    Thai: "thai",
+    Japanese: "japanese",
+    American: "tradamerican",
+    Mexican: "mexican",
+    Chinese: "chinese",
+    Vietnamese: "vietnamese",
+    Korean: "korean",
+    French: "french",
+    Indian: "indpak",
+    Mediterranean: "mediterranean",
+  };
+
+  return cuisineMap[cuisine] || "restaurants";
+};
+
+// Map dietary restrictions to Yelp attributes
+const getDietaryCategory = (dietary: string): string => {
+  const dietaryMap: Record<string, string> = {
+    Vegetarian: "vegetarian",
+    Vegan: "vegan",
+    "Gluten-Free": "gluten_free",
+  };
+
+  return dietaryMap[dietary] || "";
+};
+
+// Convert price range to Yelp price format
+// Generate comma-separated list: 1,2,3 for priceRange=3
+const getPriceFilter = (priceRange: number): string => {
+  return Array.from({ length: priceRange }, (_, i) => (i + 1).toString()).join(
+    ","
+  );
+};
+
 export const searchYelpRestaurants = async (
   city: City,
   cuisine: string,
@@ -18,31 +58,18 @@ export const searchYelpRestaurants = async (
   priceRange: number
 ): Promise<Restaurant[]> => {
   const params: YelpSearchParams = {
-    latitude: city.lat,
-    longitude: city.lng,
-    categories:
-      cuisine === "All Cuisines" ? "restaurants" : cuisine.toLowerCase(),
+    latitude: city.coordinates.lat,
+    longitude: city.coordinates.lng,
+    categories: compact([
+      getCuisineCategory(cuisine),
+      getDietaryCategory(dietary),
+    ]).join(","),
     limit: 20,
     sort_by: "rating",
   };
 
-  // Add price filter
   if (priceRange < 4) {
-    const priceFilter = Array.from(
-      { length: priceRange },
-      (_, i) => i + 1
-    ).join(",");
-    params.price = priceFilter;
-  }
-
-  // Add dietary restrictions as attributes
-  if (dietary !== "None") {
-    const attributeMap: Record<string, string> = {
-      Vegetarian: "vegetarian_friendly",
-      Vegan: "vegan_friendly",
-      "Gluten-Free": "gluten_free",
-    };
-    params.attributes = attributeMap[dietary] || "";
+    params.price = getPriceFilter(priceRange);
   }
 
   try {

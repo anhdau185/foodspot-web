@@ -14,26 +14,22 @@ import { PriceRangeSelector } from "@/components/forms/PriceRangeSelector";
 import { RestaurantList } from "@/components/restaurant/RestaurantList";
 import { Button } from "@/components/ui/Button";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { useCities } from "@/hooks/useCities";
 
 export default function HomePage() {
   const {
     step,
     setStep,
+    setCities,
     selectedCity,
-    setSelectedCity,
     selectedCuisine,
-    setSelectedCuisine,
     selectedDietary,
-    setSelectedDietary,
-    showDietaryOptions,
-    setShowDietaryOptions,
     priceRange,
-    setPriceRange,
     filteredRestaurants,
     setFilteredRestaurants,
     favorites,
     setFavorites,
-    resetPreferences,
+    goBackToPreferences,
   } = useAppStore();
 
   const { searchRestaurants, isLoading, error } = useRestaurantSearch();
@@ -43,10 +39,34 @@ export default function HomePage() {
     setFavorites(getFavorites());
   }, [setFavorites]);
 
+  useEffect(() => {
+    console.log(
+      selectedCity?.name,
+      selectedCuisine,
+      selectedDietary,
+      priceRange
+    );
+  }, [priceRange, selectedCity?.name, selectedCuisine, selectedDietary]);
+
+  const { fetchData: fetchCities } = useCities();
+
+  useEffect(() => {
+    const handleFetchCities = async () => {
+      try {
+        const data = await fetchCities();
+        setCities(data);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
+
+    handleFetchCities();
+  }, []);
+
   const handleGenerateRecommendations = async () => {
     try {
       const restaurants = await searchRestaurants(
-        selectedCity,
+        selectedCity!,
         selectedCuisine,
         selectedDietary,
         priceRange
@@ -77,35 +97,17 @@ export default function HomePage() {
           </div>
 
           <div className="bg-white rounded-2xl shadow-lg p-6 space-y-6">
-            <CitySelector
-              selectedCity={selectedCity}
-              onCityChange={setSelectedCity}
-            />
-
-            <CuisineSelector
-              selectedCuisine={selectedCuisine}
-              onCuisineChange={setSelectedCuisine}
-            />
-
-            <DietarySelector
-              selectedDietary={selectedDietary}
-              onDietaryChange={setSelectedDietary}
-              showDietaryOptions={showDietaryOptions}
-              onToggleDietaryOptions={setShowDietaryOptions}
-            />
-
-            <PriceRangeSelector
-              priceRange={priceRange}
-              onPriceRangeChange={setPriceRange}
-            />
-
+            <CitySelector />
+            <CuisineSelector />
+            <DietarySelector />
+            <PriceRangeSelector />
             <Button
-              onClick={handleGenerateRecommendations}
-              disabled={isLoading}
-              variant="primary"
               size="lg"
-              icon={isLoading ? undefined : Utensils}
+              variant="primary"
               className="w-full"
+              icon={isLoading ? undefined : Utensils}
+              disabled={isLoading || selectedCity == null}
+              onClick={handleGenerateRecommendations}
             >
               {isLoading ? <LoadingSpinner /> : "Find My Perfect Meal"}
             </Button>
@@ -121,7 +123,7 @@ export default function HomePage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <button
-            onClick={resetPreferences}
+            onClick={goBackToPreferences}
             className="flex items-center space-x-2 text-gray-600 hover:text-gray-800 cursor-pointer"
           >
             <Filter className="w-4 h-4" />
@@ -143,7 +145,7 @@ export default function HomePage() {
           restaurants={filteredRestaurants}
           favorites={favorites}
           onToggleFavorite={handleToggleFavorite}
-          onResetPreferences={resetPreferences}
+          onResetPreferences={goBackToPreferences}
         />
       </div>
     </div>

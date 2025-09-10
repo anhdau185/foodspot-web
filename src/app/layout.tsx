@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "What Should I Eat? - Dining Suggestions App",
-  description: "Find the perfect restaurant for your next meal in Vietnam",
-  keywords: "restaurant, dining, food, Vietnam, recommendations",
+  title: "FoodSpot - Find your perfect dining spot",
+  description: "Find the perfect restaurant for your next meal",
+  keywords: "restaurant, dining, food, recommendations",
 };
 
 export default function RootLayout({

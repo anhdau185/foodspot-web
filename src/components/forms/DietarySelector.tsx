@@ -1,25 +1,20 @@
 import { Badge } from "@/components/ui/Badge";
 import { dietaryRestrictions } from "@/data/dietaryOptions";
+import { useAppStore } from "@/lib/stores/useAppStore";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import React from "react";
 
-interface DietarySelectorProps {
-  selectedDietary: string;
-  onDietaryChange: (dietary: string) => void;
-  showDietaryOptions: boolean;
-  onToggleDietaryOptions: (show: boolean) => void;
-}
+export const DietarySelector = () => {
+  const {
+    selectedDietary,
+    setSelectedDietary,
+    showDietaryOptions,
+    setShowDietaryOptions,
+  } = useAppStore();
 
-export const DietarySelector: React.FC<DietarySelectorProps> = ({
-  selectedDietary,
-  onDietaryChange,
-  showDietaryOptions,
-  onToggleDietaryOptions,
-}) => {
   return (
     <div>
       <button
-        onClick={() => onToggleDietaryOptions(!showDietaryOptions)}
+        onClick={() => setShowDietaryOptions(!showDietaryOptions)}
         className="flex items-center justify-between w-full text-left"
       >
         <span className="text-sm font-medium text-gray-700">
@@ -37,7 +32,7 @@ export const DietarySelector: React.FC<DietarySelectorProps> = ({
           {dietaryRestrictions.map((dietary) => (
             <button
               key={dietary}
-              onClick={() => onDietaryChange(dietary)}
+              onClick={() => setSelectedDietary(dietary)}
               className={`p-3 text-sm rounded-lg border transition-all ${
                 selectedDietary === dietary
                   ? "bg-green-500 text-white border-green-500"

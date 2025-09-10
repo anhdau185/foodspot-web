@@ -1,4 +1,3 @@
-import { vietnamCities } from "@/data/cities";
 import { City } from "@/types/city";
 import { AppStep } from "@/types/preferences";
 import { Restaurant } from "@/types/restaurant";
@@ -10,7 +9,9 @@ interface AppState {
   setStep: (step: AppStep) => void;
 
   // Preferences
-  selectedCity: City;
+  cities: City[];
+  setCities: (cities: City[]) => void;
+  selectedCity: City | null;
   setSelectedCity: (city: City) => void;
   selectedCuisine: string;
   setSelectedCuisine: (cuisine: string) => void;
@@ -32,6 +33,7 @@ interface AppState {
   setFavorites: (favorites: Set<string>) => void;
 
   // Actions
+  goBackToPreferences: () => void;
   resetPreferences: () => void;
 }
 
@@ -41,7 +43,9 @@ export const useAppStore = create<AppState>((set) => ({
   setStep: (step) => set({ step }),
 
   // Preferences
-  selectedCity: vietnamCities[0],
+  cities: [],
+  setCities: (cities) => set({ cities }),
+  selectedCity: null,
   setSelectedCity: (selectedCity) => set({ selectedCity }),
   selectedCuisine: "All Cuisines",
   setSelectedCuisine: (selectedCuisine) => set({ selectedCuisine }),
@@ -63,13 +67,17 @@ export const useAppStore = create<AppState>((set) => ({
   setFavorites: (favorites) => set({ favorites }),
 
   // Actions
-  resetPreferences: () =>
+  goBackToPreferences: () => {
+    set({ step: "preferences" });
+  },
+  resetPreferences: () => {
     set({
       step: "preferences",
-      selectedCity: vietnamCities[0],
+      selectedCity: null,
       selectedCuisine: "All Cuisines",
       selectedDietary: "None",
       showDietaryOptions: false,
       priceRange: 3,
-    }),
+    });
+  },
 }));

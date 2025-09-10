@@ -1,15 +1,9 @@
 import { cuisineTypes } from "@/data/cuisines";
-import React from "react";
+import { useAppStore } from "@/lib/stores/useAppStore";
 
-interface CuisineSelectorProps {
-  selectedCuisine: string;
-  onCuisineChange: (cuisine: string) => void;
-}
+export const CuisineSelector = () => {
+  const { selectedCuisine, setSelectedCuisine } = useAppStore();
 
-export const CuisineSelector: React.FC<CuisineSelectorProps> = ({
-  selectedCuisine,
-  onCuisineChange,
-}) => {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -19,7 +13,7 @@ export const CuisineSelector: React.FC<CuisineSelectorProps> = ({
         {cuisineTypes.map((cuisine) => (
           <button
             key={cuisine}
-            onClick={() => onCuisineChange(cuisine)}
+            onClick={() => setSelectedCuisine(cuisine)}
             className={`p-3 text-sm rounded-lg border transition-all ${
               selectedCuisine === cuisine
                 ? "bg-orange-500 text-white border-orange-500"
