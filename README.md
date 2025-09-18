@@ -1,21 +1,21 @@
 # FoodSpot Web
 
-> 🍽️ Discover your perfect meal in Vietnam
+> 🍽️ Discover your perfect meal in North America
 
 FoodSpot helps you find the ideal restaurant based on your preferences. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
 ## 🌟 Features
 
-- 🏙️ **City Selection**: Major Vietnamese cities
+- 🏙️ **City Selection**: Major North American cities
 - 🍜 **Cuisine Filtering**: Multiple cuisine types
 - 🥗 **Dietary Options**: Vegetarian, vegan, gluten-free
 - 💰 **Budget Control**: Price range filtering
-- ⭐ **Favorites**: Save your preferred spots
+- ⭐ **Favorites**: Save your preferred spots (coming soon)
 - 📱 **Mobile-First**: Responsive design
 
 ## 🚀 Tech Stack
 
-- **Framework**: Next.js 14 with Turbopack
+- **Framework**: Next.js 15 with Turbopack
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **State**: Zustand
@@ -31,34 +31,39 @@ FoodSpot helps you find the ideal restaurant based on your preferences. Built wi
 
 ## 📋 Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - npm or yarn
 - Yelp Fusion API key
 
 ## 🛠️ Installation
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/yourusername/foodspot-web.git
    cd foodspot-web
    ```
 
 2. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables:**
+
    ```bash
-   cp .env.example .env.local
+   cp .env.example .env
    ```
 
-4. **Add your Yelp API key to `.env.local`:**
+4. **Add your Yelp API key to `.env`:**
+
    ```env
    YELP_API_KEY=your_yelp_api_key_here
    ```
 
 5. **Run the development server:**
+
    ```bash
    npm run dev
    ```
@@ -70,8 +75,8 @@ FoodSpot helps you find the ideal restaurant based on your preferences. Built wi
 
 ```
 src/
-├── app/                  # Next.js App Router
-├── components/           # React components
+├── app/                 # Next.js App Router
+├── components/          # React components
 │   ├── ui/              # Reusable UI components
 │   ├── forms/           # Form components
 │   └── restaurant/      # Restaurant-specific components
@@ -79,7 +84,7 @@ src/
 │   ├── api/             # API utilities
 │   ├── stores/          # Zustand stores
 │   └── utils/           # Utility functions
-├── types/               # TypeScript type definitions
+├── types/               # TypeScript type/interface definitions
 ├── data/                # Static data and constants
 └── hooks/               # Custom React hooks
 ```
@@ -93,7 +98,7 @@ The app uses the Yelp Fusion API to fetch restaurant data. To get your API key:
 1. Visit [Yelp Developers](https://www.yelp.com/developers/v3/manage_app)
 2. Create a new app
 3. Copy your API key
-4. Add it to your `.env.local` file
+4. Add it to your `.env` file
 
 ### API Endpoints
 
@@ -131,10 +136,6 @@ The app can be deployed to any platform that supports Next.js:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
 ## 🙏 Acknowledgments
 
 - [Yelp Fusion API](https://www.yelp.com/developers/documentation/v3) for restaurant data
@@ -144,4 +145,4 @@ This project is licensed under the MIT License.
 
 ---
 
-Made with ❤️ for food lovers in Vietnam
+Made with ❤️ for food lovers.
