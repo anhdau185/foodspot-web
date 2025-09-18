@@ -1,6 +1,6 @@
-import React from "react";
-import { Search, AlertCircle, RefreshCw } from "lucide-react";
 import { Restaurant } from "@/types/restaurant";
+import { AlertCircle, RefreshCw, Search } from "lucide-react";
+import React from "react";
 import { RestaurantCard } from "./RestaurantCard";
 
 interface RestaurantListProps {
@@ -20,7 +20,6 @@ export const RestaurantList: React.FC<RestaurantListProps> = ({
   error,
   isLoading = false,
 }) => {
-  // Loading state
   if (isLoading) {
     return (
       <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
@@ -35,7 +34,6 @@ export const RestaurantList: React.FC<RestaurantListProps> = ({
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
@@ -63,7 +61,6 @@ export const RestaurantList: React.FC<RestaurantListProps> = ({
     );
   }
 
-  // Empty results state
   if (restaurants.length === 0) {
     return (
       <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
@@ -96,7 +93,6 @@ export const RestaurantList: React.FC<RestaurantListProps> = ({
     );
   }
 
-  // Success state with restaurants
   return (
     <div className="space-y-4">
       {/* Results count */}

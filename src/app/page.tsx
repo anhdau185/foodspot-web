@@ -6,7 +6,6 @@ import { getFavorites, toggleFavorite } from "@/lib/utils/storage";
 import { AlertCircle, Filter, Utensils } from "lucide-react";
 import { useEffect } from "react";
 
-// Components
 import { CitySelector } from "@/components/forms/CitySelector";
 import { CuisineSelector } from "@/components/forms/CuisineSelector";
 import { DietarySelector } from "@/components/forms/DietarySelector";
@@ -34,7 +33,6 @@ export default function HomePage() {
 
   const { searchRestaurants, isLoading, error } = useRestaurantSearch();
 
-  // Load favorites from localStorage on mount
   useEffect(() => {
     setFavorites(getFavorites());
   }, [setFavorites]);
